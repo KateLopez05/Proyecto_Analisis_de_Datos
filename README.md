@@ -75,11 +75,10 @@ Colombia presenta brechas educativas profundas entre sus territorios. Aunque exi
 ```
 Proyecto_Analisis_de_Datos/
 │
-├── dataset/
+├── data/
 │   └── MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv
 │
 ├── index.py               # Script principal de análisis
-├── profiling_men_educacion.py  # Perfilamiento exploratorio del dataset
 ├── requirements.txt       # Dependencias del proyecto
 └── README.md              # Este archivo
 ```
@@ -105,13 +104,7 @@ pip install -r requirements.txt
 
 Coloca el archivo CSV en la carpeta `data/` del proyecto.
 
-### 4. Ejecutar el análisis de perfilamiento
-
-```bash
-python profiling_men_educacion.py
-```
-
-### 5. Ejecutar el análisis principal
+### 4. Ejecutar el análisis principal
 
 ```bash
 python index.py
@@ -131,9 +124,8 @@ numpy
 ---
 
 ## 👩‍💻 Autores
-
-Proyecto desarrollado como ejercicio académico de Análisis de Datos.  
-Bayron Meza Guzman 
+  
+Bayron Meza Guzman  
 Katerin Vanesa Lopez Moros
 
 ---
