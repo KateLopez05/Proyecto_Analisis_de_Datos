@@ -32,7 +32,7 @@ Colombia presenta brechas educativas profundas entre sus territorios. Aunque exi
 | **Portal** | [datos.gov.co](https://www.datos.gov.co) |
 | **Formato** | CSV (UTF-8, coma decimal, porcentajes con símbolo `%`) |
 | **Registros** | 462 filas × 37 columnas |
-| **Período** | 2011 – 2024 (13 años) |
+| **Período** | 2011 – 2024 (14 años) |
 | **Cobertura** | 32 departamentos + Bogotá D.C. |
 | **Licencia** | Datos abiertos del Estado colombiano — uso libre con atribución |
 
