@@ -1,10 +1,16 @@
 # Importaciones 
+import os
 import pandas as pd
 import numpy as np
 
 # Configuración 
-FILE_PATH = "/workspaces/Proyecto_Analisis_de_Datos/dataset/MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR,_BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv"
- 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR,_BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv",
+)
+
 COLS_ID   = ["AÑO", "CÓDIGO_DEPARTAMENTO", "DEPARTAMENTO", "POBLACIÓN_5_16"]
 COLS_KEY  = [
     "DESERCIÓN", "DESERCIÓN_TRANSICIÓN", "DESERCIÓN_PRIMARIA",
@@ -18,35 +24,19 @@ SEP       = "-" * 70
 
 
 # =====================================
-# Carga y conversión de tipos de datos
+# Carga del dataset
 # =====================================
 
 df = pd.read_csv(FILE_PATH, dtype=str)
- 
-# Columnas enteras conocidas
-for c in ["AÑO", "CÓDIGO_DEPARTAMENTO", "POBLACIÓN_5_16"]:
-    df[c] = pd.to_numeric(df[c], errors="coerce")
- 
-# Columnas porcentuales (coma decimal + símbolo %)
-for c in df.columns:
-    if c in COLS_ID or c == "DEPARTAMENTO":
-        continue
-    df[c] = (
-        df[c]
-        .str.replace("%", "", regex=False)
-        .str.replace(",", ".", regex=False)
-        .str.strip()
-    )
-    df[c] = pd.to_numeric(df[c], errors="coerce")
- 
+
 print(SEP)
-print("DATASET CARGADO CORRECTAMENTE Y TIPOS CONVERTIDOS")
+print("DATASET CARGADO CORRECTAMENTE (sin conversión de tipos)")
 print(SEP)
 print(f"Forma del dataset : {df.shape[0]} filas × {df.shape[1]} columnas")
 print(f"Período           : {df['AÑO'].min()} – {df['AÑO'].max()}")
 print(f"Departamentos     : {df['DEPARTAMENTO'].nunique()}")
 print()
-print("Tipos de datos tras la conversión:")
+print("Tipos de datos originales:")
 print(df.dtypes.value_counts().to_string())
 
 
@@ -156,29 +146,6 @@ print("4. RESUMEN ESTADÍSTICO (variables de interés)")
 print(SEP)
 cols_stat = [c for c in COLS_KEY if c in df.columns]
 print(df[cols_stat].describe().round(2).to_string()) 
-
-
-# Y aparte de los que piden en la actividad incluimos 
-# Outliers y observaciones automáticas
-
-# =====================================
-# 7. OUTLIERS
-# =====================================
-
-print()
-print(SEP)
-print("6. OUTLIERS por variable (método IQR, factor 1.5)")
-print(SEP)
-print(f"{'Variable':<35} {'Outliers':>8}  {'Rango':>18}  {'Mediana':>8}  {'IQR':>18}")
-print("-" * 90)
-for c in cols_stat:
-    s = df[c].dropna()
-    q1, q3 = s.quantile(0.25), s.quantile(0.75)
-    iqr = q3 - q1
-    n_out = ((df[c] < q1 - 1.5 * iqr) | (df[c] > q3 + 1.5 * iqr)).sum()
-    rango = f"[{s.min():.1f} – {s.max():.1f}]"
-    iqr_str = f"[{q1:.2f} – {q3:.2f}]"
-    print(f"  {c:<33} {n_out:>8}  {rango:>18}  {s.median():>8.2f}  {iqr_str:>18}")
 
 
 # =====================================
