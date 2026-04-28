@@ -1,7 +1,8 @@
 # Importaciones 
-import os
 import pandas as pd
 import numpy as np
+import os
+
 
 # Configuración 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -27,7 +28,7 @@ SEP       = "-" * 70
 # Carga del dataset
 # =====================================
 
-df = pd.read_csv(FILE_PATH, dtype=str)
+df = pd.read_csv(FILE_PATH)
 
 print(SEP)
 print("DATASET CARGADO CORRECTAMENTE (sin conversión de tipos)")
@@ -149,7 +150,7 @@ print(df[cols_stat].describe().round(2).to_string())
 
 
 # =====================================
-# 8. OBSERVACIONES
+# 7. OBSERVACIONES
 # =====================================
 
 print()
