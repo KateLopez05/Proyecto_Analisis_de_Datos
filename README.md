@@ -80,6 +80,7 @@ Proyecto_Analisis_de_Datos/
 │   └── MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv
 │
 ├── index.py               # Script principal de análisis
+├── index.ipynb            # Script grafico hecho en colab
 ├── requirements.txt       # Dependencias del proyecto
 └── README.md              # Este archivo
 ```
