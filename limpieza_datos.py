@@ -93,7 +93,7 @@ df["DEPARTAMENTO"] = (
 print(" DEPARTAMENTO convertido a str + upper CON ÉXITO!.")    
 
 # 3.3. AÑO → entero (int) para validar el rango 
-df["AÑO"] = pd.to_numeric(df["AÑO"], errors="coerce").astype("Int64")
+df["AÑO"] = pd.to_numeric(df["AÑO"], errors="coerce").astype("int64")
 fuera_de_rango = df[~df["AÑO"].between(2011, 2024)]
 print(f" AÑO convertido a int CON ÉXITO! Valores fuera de rango (2011-2024): {len(fuera_de_rango)}")
 
@@ -148,7 +148,9 @@ print("\n DEPARTAMENTO y CODIGO_DEPARTAMENTO convertidos a category CON ÉXITO!"
 
 # Resumen de tipos de datos tras ajustes
 print("\nTipos de datos tras ajustes:")
-print(df.dtypes.value_counts().to_string())
+resumen_tipos = df.dtypes.astype(str).value_counts().rename_axis("Tipo").reset_index(name="Cantidad")
+print(resumen_tipos.to_string(index=False))
+
 
 
 # =====================================
@@ -192,7 +194,7 @@ print(f"Variable creada: df['INTERNET_DISPONIBLE']= True/False")
 df["INTERNET_DISPONIBLE"] = ~MASCARA_INTERNET  # True si el dato está disponible, False si es nulo  
 
 
-#4.3. DESERCIÓN_TRANSICIÓN (1 nulo, 0.2%)
+# 4.3. DESERCIÓN_TRANSICIÓN (1 nulo, 0.2%)
 # Un único registro puntual por lo que lo convertimos a 
 # interpolacion lineal por departamento (método recomendado para series temporales con pocos nulos)
 
@@ -243,7 +245,7 @@ print(separador)
 # por lo que hacemos una revisión y corrección manual si es necesario.
 
 correciones_departamentos = {
-    "BOGOTÁ D.C.": "BOGOTA D.C.",
+    "BOGOTÁ D.C.": "BOGOTÁ D.C.",
     "BOGOTA"       : "BOGOTÁ D.C.",
     "NARINO"       : "NARIÑO",
     "VAUPES"       : "VAUPÉS",
@@ -461,7 +463,7 @@ agg_departamento = (
 print(agg_departamento.head(10).to_string(index=False))
 
 # 7.4. Impacto de la pandemia: media pre (2018-2019) vs media post (2020-2021)
-print("\n ____ Impacto de la pandemia: comparación vs durante (PANDEMIA)_____") 
+print("\n ____ Impacto de la pandemia: comparación pre vs durante (PANDEMIA)_____") 
 agg_pandemia = (
     df[df["AÑO"] >= 2018]
         .groupby("PANDEMIA")[variables_desercion]
