@@ -143,7 +143,7 @@ for i, row in pairs_df.head(20).iterrows():
 
 print()
 print(SEP)
-print("4. RESUMEN ESTADÍSTICO (variables de interés)")
+print("6. RESUMEN ESTADÍSTICO (variables de interés)")
 print(SEP)
 cols_stat = [c for c in COLS_KEY if c in df.columns]
 print(df[cols_stat].describe().round(2).to_string()) 
@@ -155,7 +155,7 @@ print(df[cols_stat].describe().round(2).to_string())
 
 print()
 print(SEP)
-print("8. OBSERVACIONES AUTOMÁTICAS")
+print("7. OBSERVACIONES AUTOMÁTICAS")
 print(SEP)
  
 obs = []
