@@ -4,15 +4,15 @@
 # Autores: Katerin Lopez Moros y Bayron Meza Guzman
 # =================================
 
-
-""""En este script se valida que el dataset limpio (MEN_EDUCACION_LIMPIO.csv)
-permita responder los objetivos de análisis del proyecto, Evaluando 3 dimensiones clave:
+"""En este script se valida que el dataset limpio (MEN_EDUCACION_LIMPIO.csv)
+permita responder los objetivos de análisis del proyecto, evaluando 3 dimensiones clave:
 1. Completitud de los datos
 2. Relevancia de las variables
-3. Granularidad adeacuada 
+3. Granularidad adecuada
 """
 
 # Importamos las librerías necesarias
+import os
 import pandas as pd
 import numpy as np
 import warnings
@@ -21,8 +21,11 @@ warnings.filterwarnings('ignore')
 separador1= "="*70
 separador2= "-"*70
 
-# Ruta del dataset limpio
-RUTA_LIMPIO = "data/MEN_EDUCACION_LIMPIO.csv"
+# Ruta del proyecto y dataset limpio
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RUTA_LIMPIO = os.path.join(BASE_DIR, "data", "processed", "MEN_EDUCACION_LIMPIO.csv")
+if not os.path.exists(RUTA_LIMPIO):
+    raise FileNotFoundError(f"No se encontró el archivo limpio en: {RUTA_LIMPIO}")
 
 # ==================================
 # Cargamos el dataset limpio 

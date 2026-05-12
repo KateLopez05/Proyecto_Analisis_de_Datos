@@ -49,6 +49,7 @@ Colombia presenta brechas educativas profundas entre sus territorios. Aunque exi
 | Reprobación | General, transición, primaria, secundaria, media |
 | Repitencia | General, transición, primaria, secundaria, media |
 | Infraestructura | `TAMAÑO_PROMEDIO_DE_GRUPO`, `SEDES_CONECTADAS_A_INTERNET` |
+| Nuevas | `REGION`, `PANDEMIA`, `CLAVE_DPT_AÑO`, `TAMANO_DISPONIBLE`, `SEDES_DISPONIBLE` |
 
 ---
 
@@ -74,15 +75,26 @@ Colombia presenta brechas educativas profundas entre sus territorios. Aunque exi
 ## 🗄️ Estructura del proyecto
 
 ```
-Proyecto_Analisis_de_Datos/
+PROYECTO_ANALISIS_DE_DATOS/
 │
 ├── data/
-│   └── MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR__BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv
+│   ├── raw/                          ← datos originales sin tocar
+│   │   └── MEN_ESTADISTICAS_EN_EDUCACION...csv
+│   ├── processed/                    ← datos limpios
+│   │   └── MEN_EDUCACION_LIMPIO.csv
+│   └── outputs/                      ← gráficas y exportaciones
+│       └── boxplots_desercion.png
 │
-├── index.py               # Script principal de análisis
-├── index.ipynb            # Script grafico hecho en colab
-├── requirements.txt       # Dependencias del proyecto
-└── README.md              # Este archivo
+├── notebooks/                        ← exploración y análisis
+│   └── eda.ipynb
+│
+├── src/                              ← scripts ejecutables
+│   ├── limpieza_datos.py
+│   └── validacion.py
+│
+├── eda.py                          ← punto de entrada principal
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -104,12 +116,14 @@ pip install -r requirements.txt
 
 ### 3. Agregar el dataset
 
-Coloca el archivo CSV en la carpeta `data/` del proyecto.
+Coloca el archivo CSV en la carpeta `data/raw/` del proyecto.
 
-### 4. Ejecutar el análisis principal
+### 4. Ejecutar los archivos principales
 
 ```bash
-python index.py
+python eda.py
+python src/limpieza_datos.py
+python src/validacion.py
 ```
 
 ---
@@ -119,6 +133,9 @@ python index.py
 ```
 pandas
 numpy
+os 
+matplotlib
+warnings 
 ```
 
 > Archivo `requirements.txt` incluido en el repositorio.

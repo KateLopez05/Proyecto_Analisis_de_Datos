@@ -11,14 +11,25 @@
 # Importar librerías necesarias 
 import pandas as pd
 import numpy as np
+import os
+import glob
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mtick
 import warnings 
 warnings.filterwarnings("ignore")
 
-# Esta es la ruta del archivo CSV
-RUTA_CSV = "data/MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR,_BÁSICA_Y_MEDIA_POR_DEPARTAMENTO_20260424.csv"
+# Rutas de CSV
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_RAW = os.path.join(BASE_DIR, "data", "raw")
+csv_candidates = glob.glob(os.path.join(DATA_RAW, "MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR*MEDIA_POR_DEPARTAMENTO_20260424.csv"))
+if not csv_candidates:
+    raise FileNotFoundError(f"No se encontró el archivo CSV en {DATA_RAW}")
+RUTA_CSV = csv_candidates[0]
+RUTA_SALIDA = os.path.join(BASE_DIR, "data", "processed", "MEN_EDUCACION_LIMPIO.csv")
+RUTA_BOXPLOT = os.path.join(BASE_DIR, "data", "outputs", "boxplots_desercion.png")
 
+os.makedirs(os.path.dirname(RUTA_SALIDA), exist_ok=True)
+os.makedirs(os.path.dirname(RUTA_BOXPLOT), exist_ok=True)
 separador = "-" * 70
 
 # ===================================== 
@@ -219,7 +230,7 @@ print("Estrategia: Interpolación lineal por departamento CON ÉXITO!.")
 print(f"\n Nulos restantes por columna tras tratamiento (excluidas columnas de disponibilidad):")
 cola_analisis = [
     col for col in df.columns 
-    if col not in ["TAMANO_DISPONIBLE", "INTERNET_DISPONIBLE"]
+    if col not in ["TAMANO_DISPONIBLE", "SEDES_DISPONIBLE"]
 ]
 
 resumen_nulos_final = df[cola_analisis].isnull().sum()
@@ -419,9 +430,9 @@ for ax, var, color in zip(axes, variables_desercion, colores):
             fontsize=8, color="gray")
  
 plt.tight_layout()
-plt.savefig("data/boxplots_desercion.png", dpi=150, bbox_inches="tight")
+plt.savefig(RUTA_BOXPLOT, dpi=150, bbox_inches="tight")
 plt.close()
-print("  Boxplots guardados en: data/boxplots_desercion.png  CON ÉXITO!")
+print(f"  Boxplots guardados en: {RUTA_BOXPLOT}  CON ÉXITO!")
 
 
 # =====================================
@@ -484,7 +495,6 @@ print(f"\n{separador}")
 print("7. DATASET LIMPIO — RESUMEN FINAL")
 print(separador)
  
-RUTA_SALIDA = "data/MEN_EDUCACION_LIMPIO.csv"
 df.to_csv(RUTA_SALIDA, index=False, encoding="utf-8-sig")
  
 print(f"""
