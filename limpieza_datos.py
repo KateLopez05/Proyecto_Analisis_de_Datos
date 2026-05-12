@@ -190,8 +190,8 @@ print(f"\n SEDES_CONECTADAS_A_INTERNET")
 print(f"Nulos: {MASCARA_INTERNET.sum()}")
 print(f"Años sin dato: {sorted(df.loc[MASCARA_INTERNET, 'AÑO'].unique().tolist())}")
 print("Estrategia: Exclusión - NO SE IMPUTA (patrón estructural).")
-print(f"Variable creada: df['INTERNET_DISPONIBLE']= True/False")
-df["INTERNET_DISPONIBLE"] = ~MASCARA_INTERNET  # True si el dato está disponible, False si es nulo  
+print(f"Variable creada: df['SEDES_DISPONIBLE']= True/False")
+df["SEDES_DISPONIBLE"] = ~MASCARA_INTERNET  # True si el dato está disponible, False si es nulo  
 
 
 # 4.3. DESERCIÓN_TRANSICIÓN (1 nulo, 0.2%)
@@ -246,7 +246,9 @@ print(separador)
 
 correciones_departamentos = {
     "BOGOTÁ D.C.": "BOGOTÁ D.C.",
+    "BOGOTÁ, D,C," : "BOGOTÁ D.C.",
     "BOGOTA"       : "BOGOTÁ D.C.",
+    "BOGOTÁ, D.C." : "BOGOTÁ D.C.",
     "NARINO"       : "NARIÑO",
     "VAUPES"       : "VAUPÉS",
     "CORDOBA"      : "CÓRDOBA",
@@ -281,7 +283,7 @@ region_map = {
     "HUILA"            : "Andina",
     "NARIÑO"           : "Andina",
     "NORTE DE SANTANDER": "Andina",
-    "QUINDÍO"          : "Andina",
+    "QUINDIO"          : "Andina",
     "RISARALDA"        : "Andina",
     "SANTANDER"        : "Andina",
     "TOLIMA"           : "Andina",
@@ -292,7 +294,7 @@ region_map = {
     "CÓRDOBA"          : "Caribe",
     "LA GUAJIRA"       : "Caribe",
     "MAGDALENA"        : "Caribe",
-    "SAN ANDRÉS"       : "Caribe",
+    "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA"       : "Caribe",
     "SUCRE"            : "Caribe",
     "CHOCÓ"            : "Pacífica",
     "CAUCA"            : "Pacífica",

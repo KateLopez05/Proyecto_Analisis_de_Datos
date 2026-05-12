@@ -66,11 +66,10 @@ COL_COB_NETA    = detectar_columnas(["COBERTURA_NETA", "COBERTURA NETA"], df)
 COL_COB_BRUTA   = detectar_columnas(["COBERTURA_BRUTA", "COBERTURA BRUTA"], df)
 COL_APROBACION  = detectar_columnas(["APROBACIÓN", "APROBACION"], df)
 COL_REPROBACION = detectar_columnas(["REPROBACIÓN", "REPROBACION"], df)
-COL_REGION      = "REGIÓN"
+COL_REGION      = detectar_columnas(["REGION"], df)
 COL_PANDEMIA    = "PANDEMIA"
 
 variables_desercion = [v for v in [COL_DESERCION, COL_DESER_TRANS, COL_DESER_PRIM, COL_DESER_SEC, COL_DESER_MEDIA] if v and v in df.columns]
-
 
 # ==================================
 # Objetivos de análisis del proyecto
@@ -219,7 +218,7 @@ mapa_relevancia = [
     (COL_REPROBACION, "OBJ-2, OBJ-5",      "Indicador comp.", COL_REPROBACION in df.columns if COL_REPROBACION else False),
     (COL_PANDEMIA,    "OBJ-3",             "Variable creada",COL_PANDEMIA in df.columns),
     (COL_POBLACION,   "OBJ-1, OBJ-2",      "Contexto",       COL_POBLACION in df.columns),
-    ("CLAVE_DEPTO_AÑO","Joins/merge",      "Variable creada","CLAVE_DEPTO_AÑO" in df.columns),
+    ("CLAVE_DPT_AÑO","Joins/merge",      "Variable creada","CLAVE_DPT_AÑO" in df.columns),
 ]
 
 print(f"\n  {'Variable':<45} {'Objetivo(s)':<22} {'Tipo':<18} {'Disponible'}")
@@ -239,7 +238,7 @@ print(f"\n  {'Todas las variables claves presentes: SI' if todas_disponibles els
 
 print(f"\n{separador2}")
 print("\n 2.2 Variables nuevas creadas en la limpieza:")
-variables_nuevas = ["REGIÓN", "PANDEMIA", "CLAVE_DEPTO_AÑO", "TAMANO_DISPONIBLE", "SEDES_DISPONIBLE"]
+variables_nuevas = ["REGION", "PANDEMIA", "CLAVE_DPT_AÑO", "TAMANO_DISPONIBLE", "SEDES_DISPONIBLE"]
 for v in variables_nuevas:
     if v in df.columns:
         n_unique = df[v].nunique()
