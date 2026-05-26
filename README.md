@@ -90,8 +90,10 @@ PROYECTO_ANALISIS_DE_DATOS/
 │
 ├── src/                              ← scripts ejecutables
 │   ├── limpieza_datos.py
+|   ├── transformaciones.py           ← Variables nuevas para el dashboard  
 │   └── validacion.py
 │
+├── .gitignore                      ← Para ignorar los archivos temporales
 ├── eda.py                          ← punto de entrada principal
 ├── requirements.txt
 └── README.md
