@@ -132,10 +132,23 @@ print(separador)
 
 COL_SEDES = detectar_columnas(["SEDES CONECTADAS A INTERNET", "SEDES_CONECTADAS_A_INTERNET"], df)
 
+"""
+Encontramos que los datos de conectividad solo existen en 2011 hasta el 2017
+Por ello calcularemos el promedio por departamento como lineas base 
+y lo propagamos a todos los años para clasificar cada departamento
+para permitirnos comparar la recuperacion 2022-2024 según los niveles historicos
+de conectividad del departamento.
+"""
 if COL_SEDES:
-    df_con_sedes = df[df[COL_SEDES].notna()].copy()
-    df_con_sedes["CUARTIL_CONECTIVIDAD"] = pd.qcut(
-        df_con_sedes[COL_SEDES],
+    conectividad_base = (
+        df[df[COL_SEDES].notna()]
+        .groupby(COL_DEPTO, observed=True)[COL_SEDES]
+        .mean()
+        .reset_index()
+        .rename(columns={COL_SEDES: "CONECTIVIDAD_BASE"})
+    )
+    conectividad_base["CUARTIL_CONECTIVIDAD"] = pd.qcut(
+        conectividad_base["CONECTIVIDAD_BASE"],
         q=4,
         labels=["Bajo", "Medio-Bajo", "Medio-Alto", "Alto"]
     )
@@ -143,8 +156,8 @@ if COL_SEDES:
     if "CUARTIL_CONECTIVIDAD" in df.columns:
         df = df.drop(columns=["CUARTIL_CONECTIVIDAD"])
     df = df.merge(
-        df_con_sedes[["CLAVE_DPT_AÑO", "CUARTIL_CONECTIVIDAD"]],
-        on="CLAVE_DPT_AÑO", how="left"
+        conectividad_base[[COL_DEPTO, "CUARTIL_CONECTIVIDAD"]],
+        on=COL_DEPTO, how="left"
     )
     print(f" Distribución de cuartil: ")
     print(df["CUARTIL_CONECTIVIDAD"].value_counts().sort_index().to_string())
