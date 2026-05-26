@@ -240,15 +240,37 @@ print(f"\n  {'Todas las variables claves presentes: SI' if todas_disponibles els
 # 2.2 Variables nuevas creadas - verificación 
 
 print(f"\n{separador2}")
-print("\n 2.2 Variables nuevas creadas en la limpieza:")
-variables_nuevas = ["REGION", "PANDEMIA", "CLAVE_DPT_AÑO", "TAMANO_DISPONIBLE", "SEDES_DISPONIBLE"]
-for v in variables_nuevas:
+print("\n 2.2 Variables nuevas creadas en la limpieza y transformación:")
+variables_nuevas = [
+    ("REGION",               "limpieza_datos.py",    "Región geográfica"),
+    ("PANDEMIA",             "limpieza_datos.py",    "Flag 0/1 años 2020-2021"),
+    ("CLAVE_DEPTO_AÑO",      "limpieza_datos.py",    "Clave combinada para joins"),
+    ("TAMANO_DISPONIBLE",    "limpieza_datos.py",    "Máscara disponibilidad tamaño grupo"),
+    ("SEDES_DISPONIBLE",     "limpieza_datos.py",    "Máscara disponibilidad conectividad"),
+    ("PERIODO",              "transformaciones.py",  "Pre-pandemia / Pandemia / Recuperación"),
+    ("DELTA_PANDEMIA",       "transformaciones.py",  "Diferencia deserción 2021 vs 2019"),
+    ("DELTA_RECUPERACION",   "transformaciones.py",  "Diferencia deserción 2024 vs 2021"),
+    ("CUARTIL_CONECTIVIDAD", "transformaciones.py",  "Nivel conectividad (Bajo a Alto)"),
+    ("VARIACION_ANUAL",      "transformaciones.py",  "Cambio deserción respecto año anterior"),
+]
+
+
+print(f"  {'Variable':<25} {'Script origen':<22} {'Descripción':<38} {'Estado'}")
+print(f"  {'-'*25} {'-'*22} {'-'*38} {'-'*10}")
+todas_nuevas_ok = True
+
+for v, script, desc in variables_nuevas:
     if v in df.columns:
         n_unique = df[v].nunique()
-        ejemplo = df[v].dropna().iloc[0] if not df[v].dropna().empty else "N/A"
-        print(f"{v:<25} | únicos: {n_unique:<5} | ejemplo: {ejemplo}")
-    else: 
-        print(f"{v:<25} | NO ENCONTRADA ")
+        ejemplo  = str(df[v].dropna().iloc[0]) if not df[v].dropna().empty else "N/A"
+        estado   = "OK"
+        print(f"  {v:<25} {script:<22} {desc:<38} {estado}  | únicos: {n_unique} | ej: {ejemplo[:20]}")
+    else:
+        estado = "FALTANTE"
+        todas_nuevas_ok = False
+        print(f"  {v:<25} {script:<22} {desc:<38} {estado}")
+ 
+print(f"\n  {'Todas las variables nuevas presentes: SI' if todas_nuevas_ok else 'ADVERTENCIA: ejecuta transformaciones.py antes de validar'}")
 
 
 # =====================================================

@@ -1,0 +1,33 @@
+# =============================================================================
+#  .gitignore — Proyecto Análisis de Datos Educación Colombia
+# =============================================================================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+
+# Entornos virtuales
+venv/
+env/
+.env
+.venv
+ENV/
+
+# ignoramos archivos temporales de datos
+*.tmp
+*.bak
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
